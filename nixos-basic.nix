@@ -1,6 +1,6 @@
+{ username, homeDirectory }:
 { pkgs, ... }:
 let
-  home = ((import ./home.nix) pkgs).home;
   caskaydia-cove = pkgs.callPackage ./packages/caskaydia-cove/package.nix { };
 in
 {
@@ -24,7 +24,7 @@ in
 
   wsl = {
     enable = true;
-    defaultUser = home.username;
+    defaultUser = username;
     docker-desktop.enable = false;
     interop = {
       includePath = false;
@@ -66,9 +66,9 @@ in
 
   time.timeZone = "Asia/Tokyo";
 
-  users.users.${home.username} = {
+  users.users.${username} = {
     isNormalUser = true;
-    home = home.homeDirectory;
+    home = homeDirectory;
     description = "Kento Ogata";
     extraGroups = [
       "wheel"
